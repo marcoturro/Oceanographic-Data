@@ -1,9 +1,12 @@
 close all
 clear
-Mset = 'GSR'
-mooringnb = '1'
-load(['./DATA/MOR00' mooringnb '_merged_adcps_QA.mat'])
-
+Mset = 'BGR'
+mooringnb = '17177_2019'
+if Mset == 'GSR'
+    load(['./DATA/GSR/MOR00' mooringnb '_merged_adcps_QA.mat'])
+else
+    load(['./DATA/BGR/ADCP' mooringnb '.mat'])
+end
 Nd = 1;
 time = (time - time(1));
 dayI = find(ceil(time)==Nd,1,'last');

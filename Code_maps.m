@@ -41,6 +41,7 @@ LonBGR=Lon(1:5);
 scatterm(LatGSR,LonGSR,'b','o')
 hold on
 scatterm(LatBGR,LonBGR,'r','o')
+legend('BGR','GSR')
  
 
 %%
