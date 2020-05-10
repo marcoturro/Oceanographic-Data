@@ -1,0 +1,19 @@
+% clear
+% close all
+
+TeleDynADCP
+
+for vlim = 0.01:0.01:0.1
+
+    
+v(v<vlim) = nan;
+v(~isnan(v))=1;
+v_star = v.*thetha;
+
+group = (1:nb_of_sensors) .* ones(mes,nb_of_sensors);
+measure = [v_star];
+figure('units', 'normalized', 'outerposition', [0.5 0 1 0.5])
+boxplot(measure(:),group(:))
+title(['ignoring currents of magnitude below' num2str(vlim) 'm.s-1'])
+
+end
