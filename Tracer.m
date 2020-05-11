@@ -2,8 +2,8 @@ clear
 close all
 
 TeleDynADCP
-
-%% Here we set the parameters for advection and advect the tracers
+%%
+% Here we set the parameters for advection and advect the tracers
 % and plot it
 day_r = 4; % on how many days are the particles advected
 
@@ -13,6 +13,7 @@ stp = 1+fix(1800/dt);          %set the time step to a minimum of 30mins
 partition = day_r/dt*60*60*24; % subdivide the time 
 n = floor(sqrt(nb_of_sensors));
 r = 1000;
+angle = thetha/360*(2*pi) + pi/2;
 
 disp(['nb sensors: ' num2str(nb_of_sensors) ', release every ' ...
     num2str(day_r) ' days, measurement time [days]: ' num2str(days)])
@@ -23,7 +24,7 @@ for j = 1:nb_of_sensors
 cnt = 1;
 s = subplot(n,n,j);
 hold on
-plot(r*cos(0:0.1:2*pi),r*sin(0:0.1:2*pi))
+plot(r*cos(0:0.1:2*pi),r*sin(0:0.1:2*pi),'--')
 txt = '0';
 text(r*cos(pi/2),r*sin(pi/2),txt)
 txt = '90';
@@ -38,10 +39,9 @@ k = k-1;
 x = zeros(nb_of_sensors,1) ; y = zeros(nb_of_sensors,1);
 
 for i = 2:stp:partition
-    angle = (360-thetha(i,j)+90)/360*(2*pi);
     try
-        x(j) = x(j) + v((i+partition*k),j)*cos(angle)*dt*stp;
-        y(j) = y(j) + v((i+partition*k),j)*sin(angle)*dt*stp;
+        x(j) = x(j) + v((i+partition*k),j)*(-cos(angle(i,j)))*dt*stp;
+        y(j) = y(j) + v((i+partition*k),j)*sin(angle(i,j))*dt*stp;
     catch
         disp('there was an error, moving on')
     end
@@ -54,6 +54,7 @@ for i = 2:stp:partition
         Y(j,cnt) = y(j); % the condition of 1km
         
         scatter(r*cos(th),r*sin(th))
+        % scatter(x(j),y(j))
         xlabel('W - E [m]'); ylabel('S - N [m]');
         title(['sensor n ' num2str(j) ' , ' num2str(altitude(j)) ' [m]'])
         xlim([-1200 1200])
@@ -68,3 +69,11 @@ if cnt == 1
 end
     
 end
+
+%% create an histogram of the particles reaching 1km
+
+figure
+th = atan(Y./X);
+hist(th(:),100)
+xlabel('angle [rad], 0 = E')
+set(gca,'FontSize',18)
