@@ -10,7 +10,8 @@ day_r = 2; % on how many days are the particles advected
 i_adv = floor(day_r*24*60*60/dt);
 days = round(dt*mes/60/60/24);
 nb_of_realeases = days*24; %every 1h
-stp = 1+fix(1800/dt);          %set the time step to a minimum of 30mins
+% stp = 1+fix(1800/dt); %set the time step to a minimum of 30mins
+stp = 1;
 n = ceil(sqrt(nb_of_sensors));
 seg = floor(mes/nb_of_realeases);
 time = dt*stp;
@@ -67,8 +68,8 @@ for i = 2:stp:i_adv
         X(j,cnt) = x(j); % cnt is to save the values which hit
         Y(j,cnt) = y(j); % the condition of 1km
         
-        scatter(r*cos(th),r*sin(th))
-        % scatter(x(j),y(j))
+        %scatter(r*cos(th),r*sin(th))
+        scatter(x(j),y(j))
         
         cnt = cnt+1;
         break
