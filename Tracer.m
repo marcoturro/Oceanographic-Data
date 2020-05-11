@@ -26,7 +26,7 @@ figure('units', 'normalized', 'outerposition', [0 0 1 1])
 
 for j = 1:nb_of_sensors
 cnt = 1;
-disp([num2str(j) ' sensor out of ' num2str(nb_of_sensors)])
+j
 s = subplot(n,n,j);
 xlabel('W - E [m]'); ylabel('S - N [m]');
 title(['sensor n ' num2str(j) ' , ' num2str(altitude(j)) ' [m]'])
