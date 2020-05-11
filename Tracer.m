@@ -2,10 +2,21 @@ clear
 close all
 tic
 
-TeleDynADCP
+data ='BGR';
+
+switch data
+    case 'BGR'
+        TeleDynADCP
+    case 'GSR'
+        
+    case 'some'
+end
+         
 %%
 % Here we set the parameters for advection and advect the tracers
 % and plot it
+plr = 0;
+
 day_r = 2; % on how many days are the particles advected
 i_adv = floor(day_r*24*60*60/dt);
 days = round(dt*mes/60/60/24);
@@ -23,12 +34,17 @@ angle = - thetha/180*pi + pi/2;
 disp(['nb sensors: ' num2str(nb_of_sensors) ', release every ' ...
     num2str(day_r) ' days, measurement time [days]: ' num2str(days)])
 
+if plr == 0
 figure('units', 'normalized', 'outerposition', [0 0 1 1])
+end
 
 for j = 1:nb_of_sensors
 cnt = 1;
+
 disp([num2str(j) ' sensor out of ' num2str(nb_of_sensors)])
 s = subplot(n,n,j);
+
+if plr == 1
 xlabel('W - E [m]'); ylabel('S - N [m]');
 title(['sensor n ' num2str(j) ' , ' num2str(altitude(j)) ' [m]'])
 xlim([-1200 1200])
@@ -44,7 +60,7 @@ txt = '180';
 text(r*cos(3/2*pi),r*sin(3/2*pi),txt)
 txt = '270';
 text(r*cos(pi),r*sin(pi),txt)
-
+end
 for k = 0:nb_of_realeases-1
 
 x(j) = 0; y(j) = 0;
@@ -63,32 +79,29 @@ for i = 2:stp:i_adv
     dist = sqrt(x(j)^2+y(j)^2);
     if 1000 < dist
         
-        %th = atan(y(j)/x(j));
-
+        A(j,cnt) = angle((i+N),j);
+        V(j,cnt) = v((i+N),j);
         X(j,cnt) = x(j); % cnt is to save the values which hit
         Y(j,cnt) = y(j); % the condition of 1km
         
         %scatter(r*cos(th),r*sin(th))
-        scatter(x(j),y(j))
-        
+        if plr == 1
+            scatter(x(j),y(j))
+        end
         cnt = cnt+1;
         break
     end
 end
+           
 end
-if cnt == 1
+if cnt == 1 && plr ==1
     delete(s)
 end
     
-end
+T = -(A(j,:) - pi/2)/pi*180;
+hist(T,100)
 
+end
+toc
 %% create an histogram of the particles reaching 1km
 
-figure
-th = atan(Y./X);
-hist(th(:),100)
-xlabel('angle [rad], 0 = E')
-xlim([-pi pi])
-set(gca,'FontSize',18)
-
-toc
