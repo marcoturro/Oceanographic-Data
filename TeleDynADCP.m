@@ -7,7 +7,7 @@ load(selectedfile)
 
 %% this first section aims at obtaining the time step of the recordings
 
-altitude = 1-(Data.depth-Data.depth(1));
+altitude = 6-(Data.depth-Data.depth(1));
 mes = length(Data.dat(:,1));
 nb_of_sensors = length(altitude);
 
