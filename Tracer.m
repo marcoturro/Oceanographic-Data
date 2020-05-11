@@ -27,7 +27,7 @@ figure('units', 'normalized', 'outerposition', [0 0 1 1])
 
 for j = 1:nb_of_sensors
 cnt = 1;
-j
+disp([num2str(j) ' sensor out of ' num2str(nb_of_sensors)])
 s = subplot(n,n,j);
 xlabel('W - E [m]'); ylabel('S - N [m]');
 title(['sensor n ' num2str(j) ' , ' num2str(altitude(j)) ' [m]'])
@@ -63,7 +63,7 @@ for i = 2:stp:i_adv
     dist = sqrt(x(j)^2+y(j)^2);
     if 1000 < dist
         
-        th = atan(y(j)/x(j));
+        %th = atan(y(j)/x(j));
 
         X(j,cnt) = x(j); % cnt is to save the values which hit
         Y(j,cnt) = y(j); % the condition of 1km
