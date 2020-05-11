@@ -26,7 +26,7 @@ figure('units', 'normalized', 'outerposition', [0 0 1 1])
 
 for j = 1:nb_of_sensors
 cnt = 1;
-
+j
 s = subplot(n,n,j);
 xlabel('W - E [m]'); ylabel('S - N [m]');
 title(['sensor n ' num2str(j) ' , ' num2str(altitude(j)) ' [m]'])
@@ -44,8 +44,8 @@ text(r*cos(3/2*pi),r*sin(3/2*pi),txt)
 txt = '270';
 text(r*cos(pi),r*sin(pi),txt)
 
-for k = 1:nb_of_realeases
-k = k-1
+for k = 0:nb_of_realeases-1
+
 x(j) = 0; y(j) = 0;
 N = seg*k;
 
