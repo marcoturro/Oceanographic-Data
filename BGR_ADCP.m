@@ -6,6 +6,9 @@ load(selectedfile)
 
 %% this first section aims at obtaining the time step of the recordings
 
+D.first = datetime([2000+Data.dat(1,1), Data.dat(1,2:6)]);
+D.last = datetime([2000+Data.dat(end,1), Data.dat(end,2:6)]);
+
 elevation = 6-(Data.depth-Data.depth(1));
 mes = length(Data.dat(:,1));
 nb_of_sensors = length(elevation);
@@ -44,3 +47,6 @@ end
 angle = - thetha/180*pi + pi/2;
 
 v(isnan(v))=0; thetha(isnan(thetha))=0;
+
+sensor = file(5:9);
+clear path selectedfile id thetha stp

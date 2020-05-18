@@ -2,9 +2,12 @@ clear
 close all
 tic
 
-data ='BGR';
+data ='MSEAS';
+day_r = 6; % on how many days are the particles advected
+
 
 switch data
+    
     case 'BGR'
         BGR_ADCP
     case 'GSR'
@@ -18,13 +21,9 @@ end
 % and plot it
 plr = 1;
 
-day_r = 8; % on how many days are the particles advected
 i_adv = floor(day_r*24*60*60/dt);
 days = round(dt*mes/60/60/24);
-nb_of_realeases = days*24; %every 1h
-% stp = 1+fix(1800/dt); %set the time step to a minimum of 30mins
 stp = 1;
-seg = floor(mes/nb_of_realeases);
 time = dt*stp;
 
 r = 1000;
@@ -55,9 +54,6 @@ for j = 1:nb_of_sensors %sensor
 end
 
 xlabel('[m]'); ylabel('[m]')
-title([file(1:end-4) ' - ' num2str(day_r) ' day(s) of advection'],'Interpreter','None')
-
-%%          
+title([data ' ' sensor ' from :' datestr(D.first) ' to: ' datestr(D.last)],'Interpreter','None')
+       
 toc
-
-title('October 29 - November 6 2019 - MSEAS data','Interpreter','None')

@@ -4,6 +4,10 @@ selectedfile = fullfile(path,file);
 load(selectedfile)
 
 %%
+
+D.first = datetime(datevec(time(1)));
+D.last = datetime(datevec(time(end)));
+
 elevation = flip(elevation);
 ve = flip(ve,1)/100;
 vn = flip(vn,1)/100;
@@ -39,3 +43,7 @@ else
 end
 
 angle = thetha;
+
+sensor = file(1:6);
+
+clear path selectedfile id thetha stp
