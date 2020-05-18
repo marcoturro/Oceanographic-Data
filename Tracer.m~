@@ -77,37 +77,30 @@ N = seg*k;
 
 for i = 2:stp:i_adv
     jj = jj+1;
-    
     try
-        
         x(j) = x(j) + v((i+N),j)*cos(angle((i+N),j))*time;
         y(j) = y(j) + v((i+N),j)*sin(angle((i+N),j))*time;
-        
     catch
-        
         disp('there was an error, moving on')
         disp([num2str(k) ' ' num2str(j) ' ' num2str(i)])
-        
     end
     
     dist = sqrt(x(j)^2+y(j)^2);
-    
     if 1000 < dist
         
         % aa(k+1,cnt) = wrapTo2Pi(angle((i+N),j));
         aa(k+1,cnt) = angle((i+N),j);
+
         V(j,cnt) = v((i+N),j);
         X(j,cnt) = x(j); % cnt is to save the values which hit
         Y(j,cnt) = y(j); % the condition of 1km
         ii(k+1,cnt) = i+N;
         tmpx(jj) = i;
-        
+        %scatter(r*cos(th),r*sin(th))
         if plt == 1
             scatter(x(j),y(j))
         end
-        
         cnt = cnt+1;
-        
         break
     end
 end
@@ -157,7 +150,7 @@ end
 
 
 
-figure
+%figure
  
 g = [];
 for i = 1:nb_of_sensors

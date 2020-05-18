@@ -7,7 +7,7 @@ load(selectedfile)
 %% this first section aims at obtaining the time step of the recordings
 
 elevation = 6-(Data.depth-Data.depth(1));
-mes = length(Data.dat(5414:7366,1));
+mes = length(Data.dat(:,1));
 nb_of_sensors = length(elevation);
 
 dt = [diff(Data.dat(:,6)) , diff(Data.dat(:,5)) , diff(Data.dat(:,4)) ...
@@ -34,11 +34,13 @@ for i=2:mes
 end
 
 for i=1:nb_of_sensors
-v(:,i) = Data.dat(5414:7366,6+i)/1000;
+v(:,i) = Data.dat(:,6+i)/1000;
 end
 
 for i=1:nb_of_sensors
-thetha(:,i) = Data.dat(5414:7366,6+nb_of_sensors+i); %5414:7366 for oct - nov
+thetha(:,i) = Data.dat(:,6+nb_of_sensors+i); %5414:7366 for oct - nov
 end
+
+angle = - thetha/180*pi + pi/2;
 
 v(isnan(v))=0; thetha(isnan(thetha))=0;
