@@ -2,15 +2,15 @@ clear
 close all
 tic
 
-data ='BGR';
+data ='MSEAS';
 
 switch data
     case 'BGR'
-        BGR_ADCP
+        run ./ToolBoxes/BGR_ADCP
     case 'GSR'
-        GSR_ADCP
+        run ./ToolBoxes/GSR_ADCP
     case 'MSEAS'
-        MSEAS_ADCP
+        run ./ToolBoxes/MSEAS_ADCP
 end
          
 %%
@@ -121,7 +121,7 @@ end
 I(j).id = ii;
 
 tmp = diag(aa);
-% tmp = unwrap(tmp,[pi]);
+tmp = unwrap(tmp,[pi]);
 aa = diag(tmp);
 
 A(j).id = aa;

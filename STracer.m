@@ -1,10 +1,10 @@
 clear 
-close all
+% close all
 tic
-
+addpath('./Toolboxes')
 data ='MSEAS';
-day_r = 6; % on how many days are the particles advected
-
+day_r = 9; % on how many days are the particles advected
+day_s = 1; % which day to start on
 
 switch data
     
@@ -20,16 +20,14 @@ end
 % Here we set the parameters for advection and advect the tracers
 % and plot it
 plr = 1;
-
+start = floor(day_s*24*60*60/dt);
 i_adv = floor(day_r*24*60*60/dt);
-days = round(dt*mes/60/60/24);
 stp = 1;
-time = dt*stp;
 
 r = 1000;
 x = zeros(nb_of_sensors,i_adv) ; y = zeros(nb_of_sensors,i_adv);
 
-disp(['nb sensors: ' num2str(nb_of_sensors) ', release every ' ...
+disp(['nb sensors: ' num2str(nb_of_sensors) ', advection time ' ...
     num2str(day_r) ' days, measurement time [days]: ' num2str(days)])
 
 if plr == 1
@@ -41,9 +39,9 @@ end
 for j = 1:nb_of_sensors %sensor
 
     for i = 2:stp:i_adv
-
-        x(j,i) = x(j,i-1) + v((i),j)*cos(angle((i),j))*time;
-        y(j,i) = y(j,i-1) + v((i),j)*sin(angle((i),j))*time;
+        dif = i + start;
+        x(j,i) = x(j,i-1) + v(dif,j)*cos(angle(dif,j))*time;
+        y(j,i) = y(j,i-1) + v(dif,j)*sin(angle(dif,j))*time;
 
     end
  
