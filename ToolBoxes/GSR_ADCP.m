@@ -8,7 +8,7 @@ load(selectedfile)
 D.first = datetime(datevec(time(1)));
 D.last = datetime(datevec(time(end)));
 
-elevation = flip(elevation);
+elevation = flip(elevation)';
 ve = flip(ve,1)/100;
 vn = flip(vn,1)/100;
 vv = flip(vv,1)/100;
@@ -30,6 +30,7 @@ for i = 1:nb_of_sensors
     end
     if prb == 1
         sprintf(['sensor n ' num2str(i) ' has a problem'])
+        problematicSens = i;
     end
 end
 
